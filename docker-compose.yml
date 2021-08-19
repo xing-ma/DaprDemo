@@ -1,0 +1,47 @@
+version: '3.4'
+
+services:
+  daprweb:
+    image: ${DOCKER_REGISTRY-}daprweb
+    build:
+      context: .
+      dockerfile: DaprWeb/Dockerfile
+    ports:
+      - "51000:50001"
+
+  daprweb-dapr:
+    image: "daprio/daprd:1.3.0"
+    command: [ "./daprd", "-app-id", "daprweb", "-app-port", "80" ]
+    depends_on:
+      - daprweb
+    network_mode: "service:daprweb"
+
+  daprapi:
+    image: ${DOCKER_REGISTRY-}daprapi
+    build:
+      context: .
+      dockerfile: DaprApi/Dockerfile
+    ports:
+      - "52000:50001"
+
+  daprapi-dapr:
+    image: "daprio/daprd:1.3.0"
+    command: [ "./daprd", "-app-id", "daprapi", "-app-port", "80" ]
+    depends_on:
+      - daprapi
+    network_mode: "service:daprapi"
+
+  daprgrpc:
+    image: ${DOCKER_REGISTRY-}daprgrpc
+    build:
+      context: .
+      dockerfile: DaprGrpc/Dockerfile
+    ports:
+      - "53000:5050"
+  
+  daprgrpc-dapr:
+    image: "daprio/daprd:1.3.0"
+    command: [ "./daprd", "-app-id", "daprgrpc", "-app-port", "5050", "-app-protocol", "grpc" ]
+    depends_on:
+      - daprgrpc
+    network_mode: "service:daprgrpc"

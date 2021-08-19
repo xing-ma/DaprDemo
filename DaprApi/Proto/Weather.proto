@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "DaprApi.Proto";
+
+package weather;
+
+service Weather
+{
+    rpc	GetWeather (GetWeatherRequest) returns (GetWeatherResponse);
+}
+
+message GetWeatherRequest{
+
+}
+
+message GetWeatherResponse{
+	repeated WeatherDetail Data = 1;
+}
+
+message WeatherDetail{
+	string Date = 1;
+	int32 TemperatureC = 2;
+	string Summary = 3;
+}
