@@ -26,7 +26,10 @@ services:
 
   daprapi-dapr:
     image: "daprio/daprd:1.3.0"
-    command: [ "./daprd", "-app-id", "daprapi", "-app-port", "80" ]
+    command: [ "./daprd",
+    "-app-id", "daprapi",
+    "-app-port", "80",
+    "-dapr-grpc-port", "5001" ]
     depends_on:
       - daprapi
     network_mode: "service:daprapi"

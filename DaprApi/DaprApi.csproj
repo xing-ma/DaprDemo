@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Proto\Weather.proto" />
+    <None Remove="Proto\greet.proto" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Proto\Weather.proto" GrpcServices="Server" />
+    <Protobuf Include="Proto\greet.proto" GrpcServices="None" />
   </ItemGroup>
 
 </Project>

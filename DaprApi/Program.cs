@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
@@ -21,6 +22,15 @@ namespace DaprApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureKestrel(options =>
+                    {
+                        options.ListenLocalhost(5050, o => o.Protocols =
+                            HttpProtocols.Http2);
+
+                        options.ListenLocalhost(5001, o => o.Protocols =
+                            HttpProtocols.Http1);
+                    });
+
                     webBuilder.UseStartup<Startup>();
                 });
     }

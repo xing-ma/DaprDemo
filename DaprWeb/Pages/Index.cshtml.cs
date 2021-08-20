@@ -25,30 +25,17 @@ namespace DaprWeb.Pages
                 "daprapi",
                 "weatherforecast/get");
 
-            //var response = await _daprClient.InvokeMethodGrpcAsync<GetWeatherRequest, GetWeatherResponse>(
-            //    "daprapi",
-            //    "GetWeather", new GetWeatherRequest());
-
-            //var forecasts = new List<WeatherForecast>();
-
-            //foreach (var weatherDetail in response.Data)
-            //{
-            //    forecasts.Add(new WeatherForecast()
-            //    {
-            //        Date = DateTime.Parse(weatherDetail.Date),
-            //        TemperatureC = weatherDetail.TemperatureC,
-            //        TemperatureF = weatherDetail.TemperatureC,
-            //        Summary =  weatherDetail.Summary
-            //    });
-            //}
-
-            var response = await _daprClient.InvokeMethodGrpcAsync<HelloRequest, HelloReply>(
+            var response_api_grpc = await _daprClient.InvokeMethodGrpcAsync<HelloRequest, HelloReply>(
                 "daprgrpc",
-                "SayHello", new HelloRequest(){Name = "Carl.M"});
+                "SayHello", new HelloRequest() { Name = "Carl.M-Api-Grpc" });
+
+            var response_grpc = await _daprClient.InvokeMethodGrpcAsync<HelloRequest, HelloReply>(
+                "daprgrpc",
+                "SayHello", new HelloRequest(){Name = "Carl.M-Grpc"});
 
             ViewData["WeatherForecastData"] = forecasts;
 
-            ViewData["Data"] = response;
+            ViewData["Data"] = response_grpc;
         }
     }
 }
